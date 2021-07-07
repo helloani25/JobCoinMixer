@@ -114,10 +114,10 @@ def test_initiate_transfer_coins():
 
     response = requests.get(config.API_ADDRESS_URL+"/"+withdrawal_addresses[0])
     json_data = json.loads(response.text)
-    assert int(json_data["transactions"][-1]["amount"]) == 25
+    assert int(json_data["transactions"][-1]["amount"]) == 5
     assert json_data["transactions"][-1]["toAddress"] == "Jane"
 
     response = requests.get(config.API_ADDRESS_URL+"/"+withdrawal_addresses[1])
     json_data = json.loads(response.text)
-    assert int(json_data["transactions"][-1]["amount"]) == 25
+    assert int(json_data["transactions"][-1]["amount"]) == 45
     assert json_data["transactions"][-1]["toAddress"] == "Jill"

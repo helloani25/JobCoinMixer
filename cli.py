@@ -8,10 +8,9 @@ from jobcoin import jobcoin
 
 
 def validate_percent_amounts(amounts):
-    if not amounts:
+    if not amounts or re.search(r'(?:\\d+|,)+', amounts) is None:
         raise ValueError("Amounts must be comma separated list of integers")
-    if re.search(r'(?:\\d+|,)+', amounts) is None:
-        raise ValueError("Amounts must be comma separated list of integers ")
+
     percent_amounts = list(map(lambda x: int(x), amounts.split(",")))
     percent_sum = sum(percent_amounts)
     if sum(percent_amounts) > 100:
