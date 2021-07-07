@@ -26,8 +26,6 @@ def validate_amount(percent_amounts, amount, sender_address):
         raise ValueError("Withdrawal amount {} exceeds balance {}" .format(amount , balance))
 
     withdrawal_amounts = list(map(lambda x: x*0.01*amount, percent_amounts))
-    if sum(withdrawal_amounts) > amount:
-        raise ValueError("Total amount exceeds withdrawal amount {}" .format(amount))
     return withdrawal_amounts
 
 

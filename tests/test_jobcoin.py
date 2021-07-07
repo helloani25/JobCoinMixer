@@ -39,19 +39,6 @@ def test_validate_percent_amounts_empty_input():
         cli.validate_percent_amounts(percent_amounts)
 
 
-def test_validate_withdrawals_exceeds_amount():
-    runner = CliRunner()
-    sender_address = "John"
-    amount = 999999
-    percent_amounts = [10, 90]
-    runner.invoke(cli.main, input='John').output
-    runner.invoke(cli.main, input='1234,4321').output
-    runner.invoke(cli.main, input='10,900').output
-    runner.invoke(cli.main, input='50').output
-    with pytest.raises(ValueError):
-        cli.validate_amount(percent_amounts, amount, sender_address)
-
-
 def test_validate_amount_exceeds_balance():
     runner = CliRunner()
     sender_address = "John"
