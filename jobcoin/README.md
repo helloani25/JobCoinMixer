@@ -15,6 +15,6 @@ This coding exercise makes some assumptions
 
 9. For the watcher we could use an event based architecture where the transfer from user to the deposit address triggers an event and then the event is pushed to a queue to be processed. We could use Kafka for the queue and then the consumer would the service that transfers the bitcoin from the deposit address to the home address. For the transfer from the deposit to home address and subsequently to the withdrawal accounts, we must use a scheduler to transfer. Yarn as job scheduler with hadoop will work here well. Or we could use celery here.
 
-10. One more important aspect of this system is that all the transfers will not be instantaneous.  There will be a delay in completing the transfer. So we should maintain the status of each transfer additionally to know where it's initiated, completed or failure.  
+10. One more important aspect of this system is that all the transfers will not be instantaneous.  There will be a delay in completing the transfer. So we should maintain the status of each transfer additionally to know when it's initiated, completed or failed.  
 
 9. We should also have a Dead Letter Queue for failed jobs.  We should be able to retry the transfer for n number of times that we have configured based on the failures. Some failures should not be retried. For ex: 500 error. We have to carefully design the system to make sure what HTTP status should be considered for retries 
