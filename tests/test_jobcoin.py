@@ -89,20 +89,6 @@ def test_transfer_coins_deposit_address():
     assert json_data["transactions"][-1]["toAddress"] == deposit_address
 
 
-def test_transfer_coins_home_address():
-    sender_address = "John"
-    amount = 50
-    deposit_address = "1c06c250d76b406c8926954f81c5f8cf"
-    jobcoin.create_jobcoins(sender_address)
-    jobcoin.transfer_coins_deposit_address(sender_address, deposit_address, amount)
-    jobcoin.transfer_coins_deposit_address(deposit_address, config.HOME_ADDRESS, amount)
-    response = requests.get(config.API_ADDRESS_URL+"/"+ config.HOME_ADDRESS)
-    json_data = json.loads(response.text)
-    assert int(json_data["transactions"][-1]["amount"]) == 50
-    assert json_data["transactions"][-1]["fromAddress"] == deposit_address
-    assert json_data["transactions"][-1]["toAddress"] == config.HOME_ADDRESS
-
-
 def test_transfer_coins_withdrawal_address():
     sender_address = "John"
     amount = 50
@@ -110,17 +96,17 @@ def test_transfer_coins_withdrawal_address():
     withdrawal_addresses = ["Jane", "Jill"]
     jobcoin.create_jobcoins(sender_address)
     jobcoin.transfer_coins_deposit_address(sender_address, deposit_address, amount)
-    jobcoin.transfer_coins_deposit_address(deposit_address, config.HOME_ADDRESS, amount)
-    jobcoin.transfer_coins_deposit_address(config.HOME_ADDRESS, withdrawal_addresses[0], 25)
+    jobcoin.transfer_coins(deposit_address, config.HOME_ADDRESS, amount, config.HOME_ADDRESS_TRANSFER_ERR_MSG)
+    jobcoin.transfer_coins_withdrawal_address(config.HOME_ADDRESS, withdrawal_addresses[0], 5)
     response = requests.get(config.API_ADDRESS_URL+"/"+withdrawal_addresses[0])
     json_data = json.loads(response.text)
-    assert int(json_data["transactions"][-1]["amount"]) == 25
+    assert int(json_data["transactions"][-1]["amount"]) == 5
     assert json_data["transactions"][-1]["toAddress"] == "Jane"
 
-    jobcoin.transfer_coins_deposit_address(config.HOME_ADDRESS, withdrawal_addresses[1], 25)
+    jobcoin.transfer_coins_withdrawal_address(config.HOME_ADDRESS, withdrawal_addresses[1], 45)
     response = requests.get(config.API_ADDRESS_URL+"/"+withdrawal_addresses[1])
     json_data = json.loads(response.text)
-    assert int(json_data["transactions"][-1]["amount"]) == 25
+    assert int(json_data["transactions"][-1]["amount"]) == 45
     assert json_data["transactions"][-1]["toAddress"] == "Jill"
 
 
