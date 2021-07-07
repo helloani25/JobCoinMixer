@@ -1,5 +1,4 @@
 # Replace the URL below
-import uuid
 
 API_BASE_URL = 'https://jobcoin.gemini.com/thorn-hatbox/api'
 API_ADDRESS_URL = '{}/addresses'.format(API_BASE_URL)
