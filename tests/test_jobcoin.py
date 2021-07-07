@@ -51,6 +51,7 @@ def test_validate_amount_exceeds_balance():
     with pytest.raises(ValueError):
         cli.validate_amount(percent_amounts, amount, sender_address)
 
+
 def test_validate_amount():
     runner = CliRunner()
     sender_address = "John"
