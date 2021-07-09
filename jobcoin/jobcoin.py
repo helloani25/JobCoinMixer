@@ -13,14 +13,14 @@ def create_jobcoins(sender_address):
     post_fields = {'address': sender_address}
     response = requests.post(config.CREATE_JOBCOINS_URL, data=post_fields)
     if response.status_code != 200:
-        raise customexceptions.ApiException({"message":"JobCoin create failed", "status":response.status_code})
+        raise customexceptions.ApiException({"message":config.JOBCOIN_CREATE_ERR_MSG, "status":response.status_code})
 
 
 def get_balance(address):
     response = requests.get(config.API_ADDRESS_URL+"/"+ address)
     json_data = json.loads(response.text)
     if response.status_code != 200:
-        raise customexceptions.ApiException({"message":"JobCoin create failed", "status":response.status_code})
+        raise customexceptions.ApiException({"message":config.ADDRESS_BALANCE_FETCH_ERR_MSG, "status":response.status_code})
     return int(json_data["balance"])
 
 
