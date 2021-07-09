@@ -11,7 +11,7 @@ This coding exercise makes some assumptions
 
 7. For the transfers from the users' address to the deposit address, we may want to consider a task queue for it and post the transactions/transfers there.  This task queue will have multiple workers to initiate the transfers and wait until completion or timeout.
 
-8. In order to implement a queuing system, we need a way to see all the pending transfers. For this we need a job tracking system and for each task/job that is being processed, the job id is generated.  Hadoop with zookeeper would work well here with Yarn as a job scheduler.  We could also consider Celery with zookeeper as the job tracker and Redis to hold the results of the jobs.
+8. In order to implement a queuing system, we need a way to see all the pending transfers. For this we need a job tracking system and for each task/job that is being processed, the job id is generated.  Hadoop with zookeeper would work well here with Yarn as a job scheduler.  We could also consider Celery with zookeeper/RabbitMQ as the broker and Redis to hold the results of the jobs.
 
 9. For the watcher we could use an event based architecture where the transfer from user to the deposit address triggers an event and then the event is pushed to a queue to be processed. We could use Kafka for the queue and then the consumer would the service that transfers the bitcoin from the deposit address to the home address. For the transfer from the deposit to home address and subsequently to the withdrawal accounts, we must use a scheduler to transfer. Yarn as job scheduler with hadoop will work here well. Or we could use celery here.
 
