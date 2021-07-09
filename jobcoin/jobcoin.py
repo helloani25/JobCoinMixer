@@ -11,7 +11,7 @@ import json
 
 def create_jobcoins(sender_address):
     post_fields = {'address': sender_address}
-    response = requests.post("https://jobcoin.gemini.com/thorn-hatbox/create", data=post_fields)
+    response = requests.post(config.CREATE_JOBCOINS_URL, data=post_fields)
     if response.status_code != 200:
         raise customexceptions.ApiException({"message":"JobCoin create failed", "status":response.status_code})
 
@@ -34,7 +34,7 @@ def initiate_transfer_coins(amount, sender_address, deposit_address, withdrawal_
 
 def transfer_coins(from_address, to_address, amount, error_message):
     post_fields = {'fromAddress': from_address, 'toAddress': to_address, 'amount': amount}
-    response = requests.post("https://jobcoin.gemini.com/thorn-hatbox/send", data=post_fields)
+    response = requests.post(config.SEND_URL, data=post_fields)
     if response.status_code != 200:
         raise customexceptions.ApiException({"message": error_message, "status": response.status_code})
 
